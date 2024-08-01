@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Operations</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Event listeners for buttons
+            document.getElementById('createButton').addEventListener('click', createUser);
+            document.getElementById('readButton').addEventListener('click', readUsers);
+            document.getElementById('updateButton').addEventListener('click', updateUser);
+            document.getElementById('deleteButton').addEventListener('click', deleteUser);
+        });
+
+        function createUser() {
+            const email = document.getElementById('createEmail').value;
+            const name = document.getElementById('createName').value;
+
+            if (!email || !name) {
+                console.error('Email and name are required');
+                return;
+            }
+
+            fetch('http://localhost:3030/api/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, name })
+            })
+            .then(response => response.json())
+            .then(data => console.log('User created:', data))
+            .catch(error => console.error('Error:', error));
+        }
+
+        function readUsers() {
+            fetch('http://localhost:3030/api/')
+            .then(response => response.json())
+            .then(data => {
+                console.log('Users:', data);
+                document.getElementById('userList').innerHTML = data.result.map(user => `<li>${user.name} (${user.email})</li>`).join('');
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function updateUser() {
+            const id = document.getElementById('updateId').value;
+            const email = document.getElementById('updateEmail').value;
+            const name = document.getElementById('updateName').value;
+
+            if (!id || !email || !name) {
+                console.error('ID, email, and name are required');
+                return;
+            }
+
+            fetch(`http://localhost:3030/api/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, name })
+            })
+            .then(response => response.json())
+            .then(data => console.log('User updated:', data))
+            .catch(error => console.error('Error:', error));
+        }
+
+        function deleteUser() {
+            const id = document.getElementById('deleteId').value;
+
+            if (!id) {
+                console.error('ID is required');
+                return;
+            }
+
+            fetch(`http://localhost:3030/api/${id}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('User deleted');
+                } else {
+                    console.error('Error deleting user');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</head>
+<body>
+    <h1>CRUD Operations</h1>
+
+    <section>
+        <h2>Create User</h2>
+        <label for="createEmail">Email:</label>
+        <input type="email" id="createEmail" required><br><br>
+        <label for="createName">Name:</label>
+        <input type="text" id="createName" required><br><br>
+        <button id="createButton">Create User</button>
+    </section>
+
+    <section>
+        <h2>Read Users</h2>
+        <button id="readButton">Fetch Users</button>
+        <ul id="userList"></ul>
+    </section>
+
+    <section>
+        <h2>Update User</h2>
+        <label for="updateId">User ID:</label>
+        <input type="text" id="updateId" required><br><br>
+        <label for="updateEmail">New Email:</label>
+        <input type="email" id="updateEmail" required><br><br>
+        <label for="updateName">New Name:</label>
+        <input type="text" id="updateName" required><br><br>
+        <button id="updateButton">Update User</button>
+    </section>
+
+    <section>
+        <h2>Delete User</h2>
+        <label for="deleteId">User ID:</label>
+        <input type="text" id="deleteId" required><br><br>
+        <button id="deleteButton">Delete User</button>
+    </section>
+</body>
+</html>
