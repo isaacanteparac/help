@@ -14,7 +14,6 @@ app.use(morgan('dev'));
 
 // Usar BodyParser para manejar solicitudes JSON con un límite de tamaño
 app.use(express.json({ limit: '15mb' }));
-
 //
 app.use("/api",crudRouter)
 

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page</title>
+</head>
+<body>
+    <h1>Data from Server</h1>
+    <ul>
+        {% for item in data %}
+            <li>
+                <strong>ID:</strong> {{ item.id }} <br>
+                <strong>Email:</strong> {{ item.email }} <br>
+                <strong>Name:</strong> {{ item.name }}
+            </li>
+        {% empty %}
+            <li>No data available.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

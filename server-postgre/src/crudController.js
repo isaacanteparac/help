@@ -6,25 +6,30 @@ const crud = {}
 // Crear un nuevo usuario
 crud.createUser = async (req, res) => {
     try {
-        const { email, name } = req.body
+        console.log('Received data:', req.body); // Verifica el cuerpo de la solicitud
+
+        const { email, name } = req.body;
+        if (!email || !name) {
+            return res.status(400).json({ error: 'Email and name are required' });
+        }
+
         const user = await prisma.user.create({
-            data: {
-                email,
-                name
-            }
-        })
-        res.status(201).json({ result: user })
+            data: { email, name }
+        });
+
+        res.status(201).json({ result: user });
     } catch (error) {
-        res.status(500).json({ error: 'Failed to create user', details: error.message })
+        console.error('Error creating user:', error);
+        res.status(500).json({ error: 'Failed to create user', details: error.message });
     }
-}
+};
 
 
 // Leer todos los usuarios
 crud.readUsers = async (req, res) => {
     try {
         const allUsers = await prisma.user.findMany()
-        res.status(200).json({ result: allUsers })
+        res.status(200).json(allUsers )
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch users', details: error.message })
     }
