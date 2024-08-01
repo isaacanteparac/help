@@ -1,5 +1,7 @@
 > crear proyecto
 - npx create-react-app my-app
+- npm run build
+
 
 > co
 npm i cors express morgan prisma @prisma/client
