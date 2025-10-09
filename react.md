@@ -1,7 +1,5 @@
 ### crear proyecto react
 
-- npx create-react-app my-app
-- npm run build
 - django-admin startproject example_site
 - python manage.py runserver
 - python manage.py startapp polls
@@ -26,8 +24,8 @@
 - se crea las tablas necesarias
 - npx prisma migrate dev
 - npx prisma generate
-
-
+  
+  
 
 # REACTJS BASIC
 
@@ -43,9 +41,10 @@
   
   - import {defineConfig} from "vite";
     import react from "@vitejs/plugin-react";
-    
     export default defineConfig({
+    
         plugins:[react()]
+    
     })
 
 - nos vamos donde main.js pero antes se lo cambia a jsx y add eso
@@ -60,8 +59,8 @@
   
   - configuracion en package json
     
-    -   "eslintConfig": {
-            "extends": "./node_modules/standard/eslintrc.json"
-        }
-
-
+    - "eslintConfig": {
+      
+          "extends": "./node_modules/standard/eslintrc.json"
+      
+      }
